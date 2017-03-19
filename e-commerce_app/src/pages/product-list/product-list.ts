@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import {Http} from '@angular/http';
+import 'rxjs/add/observable/from';
+import {ProductDetailPage} from "../product-detail/product-detail";
 
 /*
   Generated class for the ProductList page.
@@ -12,11 +15,19 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'product-list.html'
 })
 export class ProductListPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+ public products = [];
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public http: Http) {}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ProductListPage');
+      this.http
+          .get('http://127.0.0.1:8000/api/products')
+          .toPromise()
+          .then((response) => {this.products = response.json()});
   }
 
+    goToProductDetail(product){
+        this.navCtrl.push(ProductDetailPage, {id: product.id});
+    }
 }

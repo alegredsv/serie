@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import {Http} from '@angular/http';
+import {Http, Headers, RequestOptions} from '@angular/http';
 import 'rxjs/add/observable/from';
 import {ProductDetailPage} from "../product-detail/product-detail";
 
@@ -21,8 +21,11 @@ export class ProductListPage {
               public http: Http) {}
 
   ionViewDidLoad() {
+      let headers = new Headers();
+      headers.set('Authorization', `Bearer ${window.localStorage['token']}`);
+      let requestOptions = new RequestOptions({headers});
       this.http
-          .get('http://127.0.0.1:8000/api/products')
+          .get('http://127.0.0.1:8000/api/products',requestOptions)
           .toPromise()
           .then((response) => {this.products = response.json()});
   }

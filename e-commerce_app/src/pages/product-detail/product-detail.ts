@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {Http,Headers, RequestOptions} from '@angular/http';
 import {Cart} from "../../providers/cart";
+import {ProductListPage} from "../product-list/product-list";
 /*
   Generated class for the ProductDetail page.
 
